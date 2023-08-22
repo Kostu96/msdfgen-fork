@@ -2,18 +2,9 @@
 include(CMakeFindDependencyMacro)
 
 set(MSDFGEN_CORE_ONLY @MSDFGEN_CORE_ONLY@)
-set(MSDFGEN_USE_VCPKG @MSDFGEN_USE_VCPKG@)
 
 if(NOT MSDFGEN_CORE_ONLY)
     find_dependency(Freetype REQUIRED)
-endif()
-if(MSDFGEN_USE_SKIA)
-    find_dependency(Threads REQUIRED)
-    if(MSDFGEN_USE_VCPKG)
-        find_dependency(unofficial-skia REQUIRED)
-    else()
-        find_dependency(skia REQUIRED)
-    endif()
 endif()
 
 include("${CMAKE_CURRENT_LIST_DIR}/msdfgenTargets.cmake")
