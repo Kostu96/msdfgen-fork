@@ -43,9 +43,13 @@ file(GLOB_RECURSE MSDFGEN_EXT_HEADERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "ext/
 file(GLOB_RECURSE MSDFGEN_EXT_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "ext/*.cpp" "lib/*.cpp")
 
 # Core library
+if (NOT DEFINED CMAKE_DEBUG_POSTFIX)
+  set(CMAKE_DEBUG_POSTFIX "d")
+endif()
+
 add_library(msdfgen-core "${CMAKE_CURRENT_SOURCE_DIR}/msdfgen.h" ${MSDFGEN_CORE_HEADERS} ${MSDFGEN_CORE_SOURCES})
 add_library(msdfgen::msdfgen-core ALIAS msdfgen-core)
-set_target_properties(msdfgen-core PROPERTIES PUBLIC_HEADER "${MSDFGEN_CORE_HEADERS}")
+set_target_properties(msdfgen-core PROPERTIES PUBLIC_HEADER "${MSDFGEN_CORE_HEADERS}" DEBUG_POSTFIX "${CMAKE_DEBUG_POSTFIX}")
 set_property(TARGET msdfgen-core PROPERTY MSVC_RUNTIME_LIBRARY "${MSDFGEN_MSVC_RUNTIME}")
 target_compile_definitions(msdfgen-core PUBLIC
     MSDFGEN_VERSION=${MSDFGEN_VERSION}
